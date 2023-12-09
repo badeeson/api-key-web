@@ -5,6 +5,8 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
+import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
+import { Box } from '@mui/material';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -20,7 +22,32 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <ThemeRegistry>
+          <Box
+            component="main"
+            sx={{
+              flexGrow: 1,
+              bgcolor: 'background.default',
+              mx: 2,
+              my: 3,
+              p: 3,
+            }}
+          >
+            {children}
+          </Box>
+        </ThemeRegistry>
+        {/* <Box
+          component="main"
+          sx={{
+            mx: 2,
+            my: 3,
+            p: 3,
+          }}
+        >
+          {children}
+        </Box> */}
+      </body>
     </html>
   )
 }

@@ -5,14 +5,16 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import QueryStatsSharpIcon from '@mui/icons-material/QueryStatsSharp';
+import { useRouter } from 'next/navigation';
 
 function createData(
   name: string,
-  createAt: string,
+  createOn: string,
   role: string,
   used: number,
 ) {
-  return { name, createAt, role, used };
+  return { name, createOn, role, used };
 }
 
 const rows = [
@@ -21,13 +23,16 @@ const rows = [
 ];
 
 export default function SummaryTable() {
+  const router = useRouter()
+  const keyValue = "111-222-333-444"
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>Create&nbsp;at</TableCell>
+            <TableCell>Create&nbsp;on</TableCell>
             <TableCell>Roles</TableCell>
             <TableCell>Used</TableCell>
             <TableCell align="center" style={{ width: 120 }}>&nbsp;</TableCell>
@@ -39,11 +44,17 @@ export default function SummaryTable() {
               key={row.name}
             >
               <TableCell>{row.name}</TableCell>
-              <TableCell>{row.createAt}</TableCell>
+              <TableCell>{row.createOn}</TableCell>
               <TableCell>{row.role}</TableCell>
               <TableCell>{row.used}</TableCell>
               <TableCell align="center" style={{ width: 160 }}>
-                <Button variant="text">View&nbsp;Status</Button>
+                <Button
+                  variant="text"
+                  endIcon={<QueryStatsSharpIcon />}
+                  onClick={() => router.push(`/key-details/${keyValue}`)}
+                >
+                  View&nbsp;Stats
+                </Button>
               </TableCell>
             </TableRow>
           ))}
