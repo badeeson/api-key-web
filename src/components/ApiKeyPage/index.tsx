@@ -14,10 +14,6 @@ export default function ApiKeyPage() {
     setOpen(true);
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   return (
     <Box>
       <Grid container spacing={2}>
@@ -30,7 +26,7 @@ export default function ApiKeyPage() {
       </Grid>
       <CreateApiDialog
         open={open}
-        handleClose={handleClose}
+        setOpen={setOpen}
       />
     </Box>
   );

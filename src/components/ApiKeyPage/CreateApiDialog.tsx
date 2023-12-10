@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { alpha, styled } from '@mui/material/styles';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -56,11 +57,49 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 
 interface PropsCreateApiDialog {
   open: boolean;
-  handleClose: () => void;
+  setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function CreateApiDialog(props: PropsCreateApiDialog) {
-  const { open, handleClose } = props;
+  const { open, setOpen } = props;
+  const [networkType, setNetworkType] = React.useState(null);
+  const [inputName, setInputName] = React.useState("");
+
+  const handleChangeNetworkType = (e) => {
+    setNetworkType(e.target.value);
+  }
+
+  const handleChangeInputName = (e) => {
+    setInputName(e.target.value);
+  }
+
+  const handleClose = () => {
+    setNetworkType(null);
+    setInputName("");
+    setOpen(false);
+  };
+
+  const handleCreateApiKey = async () => {
+    if (networkType && inputName) {
+      try {
+        const preBody = { name: inputName, networkType: networkType };
+        const res = await fetch('http://localhost:3000/api-key', {
+          headers: {
+            "Content-Type": "application/json"
+          },
+          method: "POST",
+          body: JSON.stringify(preBody)
+        });
+        const data = await res.json();
+        console.log('data', data);
+        handleClose();
+
+      } catch (err) {
+        console.error(err);
+      }
+    }
+  }
+
   return (
     <BootstrapDialog
       onClose={handleClose}
@@ -91,9 +130,11 @@ export default function CreateApiDialog(props: PropsCreateApiDialog) {
                 row
                 aria-labelledby="demo-row-radio-buttons-group-label"
                 name="row-radio-buttons-group"
+                value={networkType}
+                onChange={handleChangeNetworkType}
               >
                 <Stack direction="row" spacing={1}>
-                  <Card defaultChecked>
+                  <Card>
                     <CardActionArea>
                       <CardContent sx={{ m: 1 }}>
                         <FormControlLabel
@@ -111,7 +152,7 @@ export default function CreateApiDialog(props: PropsCreateApiDialog) {
                       </CardContent>
                     </CardActionArea>
                   </Card>
-                  <Card defaultChecked>
+                  <Card>
                     <CardActionArea>
                       <CardContent sx={{ m: 1 }}>
                         <FormControlLabel
@@ -138,13 +179,18 @@ export default function CreateApiDialog(props: PropsCreateApiDialog) {
               <InputLabel shrink htmlFor="bootstrap-input">
                 NAME
               </InputLabel>
-              <BootstrapInput size="small" defaultValue="" id="bootstrap-input" />
+              <BootstrapInput
+                size="small"
+                value={inputName}
+                onChange={handleChangeInputName}
+                id="bootstrap-input"
+              />
             </FormControl>
           </Grid>
         </Grid>
       </DialogContent>
       <DialogActions sx={{ justifyContent: 'flex-start' }}>
-        <Button variant="contained" autoFocus onClick={handleClose}>
+        <Button variant="contained" autoFocus onClick={handleCreateApiKey}>
           Create
         </Button>
       </DialogActions>
