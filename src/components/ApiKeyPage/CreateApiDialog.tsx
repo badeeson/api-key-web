@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import { Button, Card, CardActionArea, CardContent, CardMedia, Container, DialogContentText, FormControl, InputBase, InputLabel, Radio, Stack, Typography } from '@mui/material';
+import { Button, Card, CardActionArea, CardContent, CardMedia, Container, DialogContentText, FormControl, FormControlLabel, FormLabel, InputBase, InputLabel, Radio, RadioGroup, Stack, Typography } from '@mui/material';
 import Grid from '@mui/material/Unstable_Grid2';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
@@ -85,57 +85,53 @@ export default function CreateApiDialog(props: PropsCreateApiDialog) {
       <DialogContent>
         <Grid container spacing={1} rowSpacing={3}>
           <Grid xs={12}>
-            <Typography gutterBottom variant="caption">
-              NETWORK
-            </Typography>
-            <Stack direction="row" spacing={1}>
-              <Card defaultChecked>
-                <CardActionArea>
-                  <CardContent sx={{ m: 1 }}>
-                    <Stack direction="row" alignItems="flex-start" justifyContent="center">
-                      <Radio
-                        // checked={selectedValue === 'a'}
-                        // onChange={handleChange}
-                        value="a"
-                        name="radio-buttons"
-                        inputProps={{ 'aria-label': 'A' }}
-                      />
-                      <DialogContentText>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Web3&nbsp;API
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Ethereum,&nbsp;L2's,&nbsp;and&nbsp;non-evm&nbsp;l1's
-                        </Typography>
-                      </DialogContentText>
-                    </Stack>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-              <Card>
-                <CardActionArea>
-                  <CardContent sx={{ m: 1 }}>
-                    <Stack direction="row" alignItems="flex-start" justifyContent="center">
-                      <Radio
-                        // checked={selectedValue === 'a'}
-                        // onChange={handleChange}
-                        value="a"
-                        name="radio-buttons"
-                        inputProps={{ 'aria-label': 'A' }}
-                      />
-                      <DialogContentText>
-                        <Typography gutterBottom variant="h5" component="div">
-                          IPFS
-                        </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Distributed, peer-to-peer&nbsp;storage
-                        </Typography>
-                      </DialogContentText>
-                    </Stack>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Stack>
+            <FormControl>
+              <FormLabel id="demo-row-radio-buttons-group-label">NETWORK</FormLabel>
+              <RadioGroup
+                row
+                aria-labelledby="demo-row-radio-buttons-group-label"
+                name="row-radio-buttons-group"
+              >
+                <Stack direction="row" spacing={1}>
+                  <Card defaultChecked>
+                    <CardActionArea>
+                      <CardContent sx={{ m: 1 }}>
+                        <FormControlLabel
+                          value="web-3-api"
+                          control={<Radio />}
+                          label={<>
+                            <Typography gutterBottom variant="h5" component="div">
+                              Web3&nbsp;API
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              Ethereum,&nbsp;L2's,&nbsp;and&nbsp;non-evm&nbsp;l1's
+                            </Typography>
+                          </>}
+                        />
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                  <Card defaultChecked>
+                    <CardActionArea>
+                      <CardContent sx={{ m: 1 }}>
+                        <FormControlLabel
+                          value="ipfs"
+                          control={<Radio />}
+                          label={<>
+                            <Typography gutterBottom variant="h5" component="div">
+                              IPFS
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                              Distributed, peer-to-peer&nbsp;storage
+                            </Typography>
+                          </>}
+                        />
+                      </CardContent>
+                    </CardActionArea>
+                  </Card>
+                </Stack>
+              </RadioGroup>
+            </FormControl>
           </Grid>
           <Grid xs={12}>
             <FormControl size="small" fullWidth variant="standard">
