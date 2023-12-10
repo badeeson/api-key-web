@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ThemeRegistry>
+        {/* <ThemeRegistry>
           <Box
             component="main"
             sx={{
@@ -36,8 +36,8 @@ export default function RootLayout({
           >
             {children}
           </Box>
-        </ThemeRegistry>
-        {/* <Box
+        </ThemeRegistry> */}
+        <Box
           component="main"
           sx={{
             mx: 2,
@@ -46,7 +46,7 @@ export default function RootLayout({
           }}
         >
           {children}
-        </Box> */}
+        </Box>
       </body>
     </html>
   )
