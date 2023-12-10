@@ -7,23 +7,21 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import QueryStatsSharpIcon from '@mui/icons-material/QueryStatsSharp';
 import { useRouter } from 'next/navigation';
+import React from 'react';
 
-function createData(
-  name: string,
-  createOn: string,
-  role: string,
-  used: number,
-) {
-  return { name, createOn, role, used };
+interface PropsSummaryTable {
+  tableData: {
+    name: string,
+    key: string,
+    createdAt: string,
+    maxQuotaPerDay: number,
+    remainingQuota: number
+  }[] | []
 }
 
-const rows = [
-  createData('Moand', '2023-12-06', 'OWNER', 12),
-  createData('Roger', '2023-12-07', 'OWNER', 0),
-];
-
-export default function SummaryTable() {
-  const router = useRouter()
+export default function SummaryTable(props: PropsSummaryTable) {
+  const { tableData } = props;
+  const router = useRouter();
   const keyValue = "111-222-333-444"
 
   return (
@@ -39,25 +37,37 @@ export default function SummaryTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
-            <TableRow
-              key={row.name}
-            >
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.createOn}</TableCell>
-              <TableCell>{row.role}</TableCell>
-              <TableCell>{row.used}</TableCell>
-              <TableCell align="center" style={{ width: 160 }}>
-                <Button
-                  variant="text"
-                  endIcon={<QueryStatsSharpIcon />}
-                  onClick={() => router.push(`/key-details/${keyValue}`)}
-                >
-                  View&nbsp;Stats
-                </Button>
-              </TableCell>
-            </TableRow>
-          ))}
+          {tableData.map((
+            row: {
+              name: string,
+              key: string,
+              createdAt: string,
+              maxQuotaPerDay: number,
+              remainingQuota: number
+            }) => {
+            const d = new Date(row?.createdAt)
+            const createOn = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+            const used = row?.maxQuotaPerDay - row?.remainingQuota;
+            return (
+              <TableRow
+                key={row.name}
+              >
+                <TableCell>{row.name}</TableCell>
+                <TableCell>{createOn}</TableCell>
+                <TableCell>OWNER</TableCell>
+                <TableCell>{used}</TableCell>
+                <TableCell align="center" style={{ width: 160 }}>
+                  <Button
+                    variant="text"
+                    endIcon={<QueryStatsSharpIcon />}
+                    onClick={() => router.push(`/key-details/${keyValue}`)}
+                  >
+                    View&nbsp;Stats
+                  </Button>
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </TableContainer>

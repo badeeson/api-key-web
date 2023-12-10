@@ -9,10 +9,26 @@ import * as React from 'react';
 
 export default function ApiKeyPage() {
   const [open, setOpen] = React.useState(false);
+  const [tableData, setTableData] = React.useState([]);
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const fetchData = async () => {
+    try {
+      const res = await fetch('http://localhost:4000/api-key/all');
+      const data = await res.json();
+      setTableData(data?.apiKeys);
+      console.log('data table', data)
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  React.useEffect(() => {
+    fetchData();
+  }, [])
 
   return (
     <Box>
@@ -21,12 +37,15 @@ export default function ApiKeyPage() {
           <ApiKeyHeader handleClickOpen={handleClickOpen} />
         </Grid>
         <Grid xs={12}>
-          <SummaryTable />
+          <SummaryTable
+            tableData={tableData}
+          />
         </Grid>
       </Grid>
       <CreateApiDialog
         open={open}
         setOpen={setOpen}
+        fetchData={fetchData}
       />
     </Box>
   );

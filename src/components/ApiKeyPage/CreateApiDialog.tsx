@@ -58,10 +58,11 @@ const BootstrapInput = styled(InputBase)(({ theme }) => ({
 interface PropsCreateApiDialog {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchData: () => Promise<void>;
 }
 
 export default function CreateApiDialog(props: PropsCreateApiDialog) {
-  const { open, setOpen } = props;
+  const { open, setOpen, fetchData } = props;
   const [networkType, setNetworkType] = React.useState(null);
   const [inputName, setInputName] = React.useState("");
 
@@ -76,6 +77,7 @@ export default function CreateApiDialog(props: PropsCreateApiDialog) {
   const handleClose = () => {
     setNetworkType(null);
     setInputName("");
+    fetchData();
     setOpen(false);
   };
 
