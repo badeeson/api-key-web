@@ -7,6 +7,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 import ThemeRegistry from '@/components/ThemeRegistry/ThemeRegistry';
 import { Box } from '@mui/material';
+import DrawerAppBar from '@/components/DrawerAppBar';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,6 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+        <DrawerAppBar>
+          {children}
+        </DrawerAppBar>
         {/* <ThemeRegistry>
           <Box
             component="main"
@@ -37,16 +41,6 @@ export default function RootLayout({
             {children}
           </Box>
         </ThemeRegistry> */}
-        <Box
-          component="main"
-          sx={{
-            mx: 2,
-            my: 3,
-            p: 3,
-          }}
-        >
-          {children}
-        </Box>
       </body>
     </html>
   )
