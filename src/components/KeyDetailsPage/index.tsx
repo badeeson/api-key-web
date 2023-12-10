@@ -154,7 +154,7 @@ export default function KeyDetailsPage(props: PropsKeyDetails) {
                                       <MenuItem value={1}>SUBNET</MenuItem>
                                     </Select>
                                   </FormControl>
-                                  <TextBox value={`http://localhost:3000/api-key-service/${keyValue}`} />
+                                  <TextBox value={`http://localhost:4000/api-key-service/${keyValue}`} />
                                 </Stack>
                               </Grid>
                             </Grid>

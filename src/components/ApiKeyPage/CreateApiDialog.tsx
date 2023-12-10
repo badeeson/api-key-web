@@ -83,7 +83,7 @@ export default function CreateApiDialog(props: PropsCreateApiDialog) {
     if (networkType && inputName) {
       try {
         const preBody = { name: inputName, networkType: networkType };
-        const res = await fetch('http://localhost:3000/api-key', {
+        const res = await fetch('http://localhost:4000/api-key', {
           headers: {
             "Content-Type": "application/json"
           },
