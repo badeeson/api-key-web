@@ -19,7 +19,8 @@ export default function ApiKeyPage() {
     try {
       const res = await fetch('http://localhost:4000/api-key/all');
       const data = await res.json();
-      setTableData(data?.apiKeys);
+      const validData = data?.apiKeys || [];
+      setTableData(validData);
       console.log('data table', data)
     } catch (err) {
       console.error(err);
