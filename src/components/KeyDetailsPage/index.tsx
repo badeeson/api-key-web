@@ -36,13 +36,21 @@ interface PropsKeyDetails {
 
 export default function KeyDetailsPage(props: PropsKeyDetails) {
   const { keyValue } = props;
-  const [alignment, setAlignment] = React.useState(0);
+  const [apiTab, setApiTab] = React.useState(0);
+  const [protocol, setProtocol] = React.useState(0);
+
+  const handleChangeApiTab = (
+    event: React.MouseEvent<HTMLElement>,
+    value: number,
+  ) => {
+    setApiTab(value);
+  };
 
   const handleChange = (
     event: React.MouseEvent<HTMLElement>,
     value: number,
   ) => {
-    setAlignment(value);
+    setProtocol(value);
   };
 
   return (
@@ -61,9 +69,9 @@ export default function KeyDetailsPage(props: PropsKeyDetails) {
               </Box>
               <ToggleButtonGroup
                 color="primary"
-                value={alignment}
+                value={apiTab}
                 exclusive
-                onChange={handleChange}
+                onChange={handleChangeApiTab}
                 aria-label="Platform"
               >
                 <StyledToggleButton value={0}>Endpoints</StyledToggleButton>
@@ -91,7 +99,7 @@ export default function KeyDetailsPage(props: PropsKeyDetails) {
                   </Box>
                   <ToggleButtonGroup
                     color="primary"
-                    value={alignment}
+                    value={protocol}
                     exclusive
                     onChange={handleChange}
                     aria-label="Platform"

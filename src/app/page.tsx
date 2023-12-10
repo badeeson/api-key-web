@@ -6,7 +6,6 @@ import ApiKeyPage from '@/components/ApiKeyPage';
 export default function Home() {
   return (
     <React.Fragment>
-      <CssBaseline />
       <ApiKeyPage />
     </React.Fragment>
   );

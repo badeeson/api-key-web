@@ -48,13 +48,13 @@ export default function DrawerAppBar(props: Props) {
       <Divider />
       <List>
         {navItems.map((item) => (
-          <ListItem key={item.label} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <Link href={item.pathname}>
+          <Link href={item.pathname} passHref>
+            <ListItem key={item.label} disablePadding>
+              <ListItemButton sx={{ textAlign: 'center' }}>
                 <ListItemText primary={item.label} />
-              </Link>
-            </ListItemButton>
-          </ListItem>
+              </ListItemButton>
+            </ListItem>
+          </Link>
         ))}
       </List>
     </Box>
@@ -63,7 +63,7 @@ export default function DrawerAppBar(props: Props) {
   const container = window !== undefined ? () => window().document.body : undefined;
 
   return (
-    <Box sx={{ display: 'flex' }}>
+    <Box>
       <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
@@ -85,9 +85,11 @@ export default function DrawerAppBar(props: Props) {
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((item) => (
-              <Button key={item.label} sx={{ color: '#fff' }}>
-                <Link href={item.pathname}>{item.label}</Link>
-              </Button>
+              <Link href={item.pathname} passHref>
+                <Button key={item.label} sx={{ color: '#fff' }}>
+                  {item.label}
+                </Button>
+              </Link>
             ))}
           </Box>
         </Toolbar>
