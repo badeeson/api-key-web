@@ -7,7 +7,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import { Button, TextField } from '@mui/material';
 import ContentCopyIcon from '@mui/icons-material/ContentCopy';
 
-function CopyButton() {
+function CopyButton({ onClick }: { onClick: any }) {
   return (
     <IconButton
       size="medium"
@@ -19,6 +19,7 @@ function CopyButton() {
           backgroundColor: 'rgba(25, 118, 210, 0.54)'
         }
       }}
+      onClick={onClick}
     >
       <ContentCopyIcon
         sx={{ fill: 'white' }}
@@ -29,12 +30,17 @@ function CopyButton() {
 
 export default function TextBox(props: { value: string, iconBeforeInput?: boolean }) {
   const { value, iconBeforeInput = false } = props;
+
+  const handleCopyText = () => {
+    navigator.clipboard.writeText(value);
+  }
+
   return (
     <Paper
       component="form"
       sx={{ p: '2px 4px', display: 'flex', alignItems: 'center', width: '100%' }}
     >
-      {iconBeforeInput && <CopyButton />}
+      {iconBeforeInput && <CopyButton onClick={handleCopyText} />}
       <TextField
         size="small"
         // color="primary"
@@ -42,7 +48,7 @@ export default function TextBox(props: { value: string, iconBeforeInput?: boolea
         sx={{ flex: 1 }}
         value={value}
       />
-      {!iconBeforeInput && <CopyButton />}
+      {!iconBeforeInput && <CopyButton onClick={handleCopyText} />}
     </Paper>
   );
 }

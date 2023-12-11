@@ -1,3 +1,4 @@
+import * as React from 'react';
 import { Alert, Button, Paper, Stack } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import QueryStatsSharpIcon from '@mui/icons-material/QueryStatsSharp';
 import { useRouter } from 'next/navigation';
-import React from 'react';
+import { convertDate } from '@/utils/convert-date';
+
 interface PropsSummaryTable {
   tableData: {
     name: string,
@@ -51,8 +53,7 @@ export default function SummaryTable(props: PropsSummaryTable) {
                 maxQuotaPerDay: number,
                 remainingQuota: number
               }) => {
-              const d = new Date(row?.createdAt)
-              const createOn = `${d.getFullYear()}-${d.getMonth() + 1}-${d.getDate()}`;
+              const createOn = convertDate(row?.createdAt);
               const used = row?.maxQuotaPerDay - row?.remainingQuota;
               return (
                 <TableRow

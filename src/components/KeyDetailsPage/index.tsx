@@ -10,6 +10,7 @@ import TextBox from './TextBox';
 import FolderIcon from '@mui/icons-material/Folder';
 import FilterAltSharpIcon from '@mui/icons-material/FilterAltSharp';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
+import { convertDate } from '@/utils/convert-date';
 
 const StyledToggleButton = styled(ToggleButton)({
   "&.Mui-selected, &.Mui-selected:hover": {
@@ -34,10 +35,19 @@ interface PropsKeyDetails {
   keyValue: string;
 }
 
+interface StateKeyDetails {
+  name: string;
+  key: string;
+  createdAt: string;
+  maxQuotaPerDay: number;
+  remainingQuota: number;
+}
+
 export default function KeyDetailsPage(props: PropsKeyDetails) {
   const { keyValue } = props;
   const [apiTab, setApiTab] = React.useState(0);
   const [protocol, setProtocol] = React.useState(0);
+  const [keyDetails, setkeyDetails] = React.useState<StateKeyDetails | {}>({});
 
   const handleChangeApiTab = (
     event: React.MouseEvent<HTMLElement>,
@@ -53,6 +63,21 @@ export default function KeyDetailsPage(props: PropsKeyDetails) {
     setProtocol(value);
   };
 
+  React.useEffect(() => {
+    const fetchKeyDetails = async () => {
+      try {
+        const res = await fetch(`http://localhost:4000/api-key?key=${keyValue}`);
+        const data = await res.json();
+        console.log('data', data)
+        setkeyDetails(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    fetchKeyDetails();
+  }, [keyValue]);
+
   return (
     <Box>
       <Grid container rowSpacing={4}>
@@ -61,10 +86,10 @@ export default function KeyDetailsPage(props: PropsKeyDetails) {
             <Stack direction="row" alignItems="center" justifyContent="space-between">
               <Box>
                 <Typography gutterBottom variant="h5" component="div">
-                  Moand
+                  {keyDetails?.name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  Created on 2023-12-05
+                  Created on {convertDate(keyDetails?.createdAt)}
                 </Typography>
               </Box>
               <ToggleButtonGroup
@@ -154,7 +179,7 @@ export default function KeyDetailsPage(props: PropsKeyDetails) {
                                       <MenuItem value={1}>SUBNET</MenuItem>
                                     </Select>
                                   </FormControl>
-                                  <TextBox value={`http://localhost:4000/api-key-service/${keyValue}`} />
+                                  <TextBox value={`http://localhost:4000/api-key/validate/${keyValue}`} />
                                 </Stack>
                               </Grid>
                             </Grid>
